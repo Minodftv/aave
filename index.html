@@ -1,28 +1,4 @@
-<?php
-session_start(); 
 
-
-
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['h-captcha-response'])) {
-    $secretKey = "ES_25e4724c3a214d9484493576d957af77";
-    $responseKey = $_POST['h-captcha-response'];
-    $userIP = $_SERVER['REMOTE_ADDR'];
-
-    $url = "https://hcaptcha.com/siteverify?secret=" . $secretKey . "&response=" . $responseKey . "&remoteip=" . $userIP;
-    $response = file_get_contents($url);
-    $responseData = json_decode($response);
-
-    if ($responseData->success) {
-        $_SESSION['captcha_verified'] = true; 
-        header('Location: claim');
-        exit;
-    } else {
-        echo "<p>Please try again.</p>";
-    }
-}
-?>
-<!DOCTYPE html>
 <html lang="en">
 <!--
 	M RYUK
